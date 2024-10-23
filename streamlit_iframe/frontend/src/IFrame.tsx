@@ -1,9 +1,9 @@
+import React, { IframeHTMLAttributes, ReactNode } from "react"
 import {
   Streamlit,
   StreamlitComponentBase,
   withStreamlitConnection,
 } from "streamlit-component-lib"
-import React, { IframeHTMLAttributes, ReactNode } from "react"
 
 /**
  * This is a React-based component template. The `render()` function is called
@@ -26,11 +26,14 @@ class IFrame extends StreamlitComponentBase {
     const args: IframeHTMLAttributes<HTMLIFrameElement> =
       this.props.args["attributes"]
 
-    const title = args.title || "Streamlit IFrame Component"
-
     return (
       <span>
-        <iframe title={title} {...args} />
+        <iframe
+          className="stIFrame"
+          data-testid="stIFrame"
+          title="st.iframe"
+          {...args}
+        />
       </span>
     )
   }
