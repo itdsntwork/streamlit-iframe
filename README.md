@@ -7,7 +7,7 @@ This component is an iframe wrapper that allows you to render an HTML iframe com
 - Render an HTML iframe within a Streamlit app.
 - Capture and return data posted from the iframe using `window.parent.postMessage`.
 
-## Installation
+## Development
 
 To set up the development environment, follow these steps:
 
@@ -21,6 +21,27 @@ To set up the development environment, follow these steps:
     ```sh
     pip install streamlit
     ```
+
+## Usage
+
+Install streamlit-iframe with pip
+
+```sh
+pip install streamlit-iframe
+```
+
+Use the component in your Streamlit app:
+
+```python
+import streamlit as st
+from streamlit_iframe import streamlit_iframe
+
+event = streamlit_iframe({
+    "src": "https://www.example.com",
+    "height": "500px",
+    "width": "600px",
+})
+```
 
 ## Running the Example
 
