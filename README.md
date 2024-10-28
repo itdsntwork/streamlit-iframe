@@ -7,21 +7,6 @@ This component is an iframe wrapper that allows you to render an HTML iframe com
 - Render an HTML iframe within a Streamlit app.
 - Capture and return data posted from the iframe using `window.parent.postMessage`.
 
-## Development
-
-To set up the development environment, follow these steps:
-
-1. Create a virtual environment:
-    ```sh
-    python3 -m venv .venv
-    source .venv/bin/activate
-    ```
-
-2. Install the required dependencies:
-    ```sh
-    pip install streamlit
-    ```
-
 ## Usage
 
 Install streamlit-iframe with pip
@@ -42,6 +27,21 @@ event = streamlit_iframe({
     "width": "600px",
 })
 ```
+
+## Development
+
+To set up the development environment, follow these steps:
+
+1. Create a virtual environment:
+    ```sh
+    python3 -m venv .venv
+    source .venv/bin/activate
+    ```
+
+2. Install the required dependencies:
+    ```sh
+    pip install streamlit
+    ```
 
 ## Running the Example
 
