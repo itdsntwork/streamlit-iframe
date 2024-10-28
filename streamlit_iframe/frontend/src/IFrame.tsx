@@ -1,42 +1,50 @@
-import React, { IframeHTMLAttributes, ReactNode } from "react"
-import {
-  Streamlit,
-  StreamlitComponentBase,
-  withStreamlitConnection,
-} from "streamlit-component-lib"
+import React, {
+  useEffect,
+  IframeHTMLAttributes,
+  useCallback,
+  useMemo,
+} from "react"
+import { Streamlit } from "streamlit-component-lib"
+import { useRenderData } from "streamlit-component-lib-react-hooks"
 
-/**
- * This is a React-based component template. The `render()` function is called
- * automatically when your component should be re-rendered.
- */
-class IFrame extends StreamlitComponentBase {
-  private handleIframeMessage = (e: MessageEvent): void => {
-    Streamlit.setComponentValue(e.data)
+const IFrame = () => {
+  const { args: { attributes } = {} } = useRenderData() as {
+    args: { attributes: IframeHTMLAttributes<HTMLIFrameElement> }
   }
 
-  componentDidMount(): void {
-    window?.addEventListener("message", this.handleIframeMessage)
+  const origin = useMemo(
+    () => attributes?.src?.split("/")?.slice(0, 3)?.join("/"),
+    [attributes?.src]
+  )
+
+  const handleIframeMessage = useCallback(
+    (e: MessageEvent): void => {
+      if (e.origin !== origin) {
+        return
+      }
+      Streamlit.setComponentValue(e.data)
+    },
+    [origin]
+  )
+
+  useEffect(() => {
+    window?.addEventListener("message", handleIframeMessage)
+    return () => {
+      window?.removeEventListener("message", handleIframeMessage)
+    }
+  }, [handleIframeMessage, origin])
+
+  const style = {
+    ...defaultStyle,
+    ...attributes?.style,
   }
 
-  componentWillUnmount(): void {
-    window?.removeEventListener("message", this.handleIframeMessage)
-  }
-
-  public render = (): ReactNode => {
-    const args: IframeHTMLAttributes<HTMLIFrameElement> =
-      this.props.args["attributes"]
-
-    return (
-      <span>
-        <iframe
-          className="stIFrame"
-          data-testid="stIFrame"
-          title="st.iframe"
-          {...args}
-        />
-      </span>
-    )
-  }
+  const title = attributes?.title || "st.iframe"
+  return <iframe title={title} {...attributes} style={style} />
 }
 
-export default withStreamlitConnection(IFrame)
+export default IFrame
+
+const defaultStyle = {
+  borderWidth: 0,
+}

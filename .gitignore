@@ -1,2 +1,3 @@
 streamlit_iframe/frontend/node_modules/
 streamlit_iframe/__pycache__/
+.venv/
