@@ -2,3 +2,6 @@ streamlit_iframe/frontend/node_modules/
 streamlit_iframe/__pycache__/
 streamlit_iframe/frontend/build/
 .venv/
+dist/
+build/
+streamlit_iframe.egg-info/
